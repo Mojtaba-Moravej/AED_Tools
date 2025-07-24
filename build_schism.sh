@@ -7,7 +7,7 @@ export WITH_AED_PLUS=false
 
 export CWD=`pwd`
 export MAKE=make
-export BFLAG='-j8'
+
 export ERROR=0
 export MDEBUG=false
 
@@ -74,6 +74,9 @@ ARGS=""
 while [ $# -gt 0 ] ; do
   ARGS="$ARGS $1"
   case $1 in
+    --number_of_cores)
+      export BFLAG='-j8'
+      ;;
     --debug)
       export DEBUG=true
       ;;
