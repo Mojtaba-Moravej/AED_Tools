@@ -1,7 +1,7 @@
 Building SCHISM-AED
 ===================
 
-git clone git@github.com:AquaticEcoDynamics/AED_Tools
+git clone https://github.com/AquaticEcoDynamics/AED_Tools.git
 cd AED_Tools
 ./fetch_sources.sh libaed schism
 patch -p0 < schism-aed/aed-schism.xdiff 
