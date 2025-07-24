@@ -4,7 +4,7 @@
 #export WITH_AED="ON"
 export FABMDIR=fabm-schism
 export WITH_AED_PLUS=false
-
+export BFLAG="-j8"
 export CWD=`pwd`
 export MAKE=make
 
@@ -76,7 +76,13 @@ while [ $# -gt 0 ] ; do
   case $1 in
     --number_of_cores)
       shift
-      export BFLAG="-j$1"
+      if [[ "$1" =~ ^[0-9]+$ ]]; then
+        export BFLAG="-j$1"
+      else
+        echo "Error: --number_of_cores requires a numeric value (e.g. --number_of_cores 16)."
+        export ERROR=1
+        exit 1
+      fi
       ;;
     --debug)
       export DEBUG=true
@@ -217,41 +223,42 @@ while [ $# -gt 0 ] ; do
       ;;
     --help)
       echo "build_schism accepts the following flags:"
-      echo "  --debug          : build with debugging symbols"
-      echo "  --gfort          : use the gfortran compiler"
-      echo "  --ifort          : use the older intel fortran compiler"
-      echo "  --ifx            : use the newer intel fortran compiler"
-#     echo "  --flang          : use the flang compiler"
-      echo "  --verbose        : turn on the verbose make flag"
+      echo "  --number_of_cores : input the number of cpu cores, defult is 8"
+      echo "  --debug           : build with debugging symbols"
+      echo "  --gfort           : use the gfortran compiler"
+      echo "  --ifort           : use the older intel fortran compiler"
+      echo "  --ifx             : use the newer intel fortran compiler"
+#     echo "  --flang           : use the flang compiler"
+      echo "  --verbose         : turn on the verbose make flag"
       echo
-      echo "  --with-aed       : build with aed enabled (default)"
-      echo "  --with-aed-plus  : build with aed and aed-plus enabled"
+      echo "  --with-aed        : build with aed enabled (default)"
+      echo "  --with-aed-plus   : build with aed and aed-plus enabled"
       echo
-      echo "  --with-fabm      : build with fabm enabled"
-      echo "  --with-gotm      : fabm and gotm cannot be used together"
+      echo "  --with-fabm       : build with fabm enabled"
+      echo "  --with-gotm       : fabm and gotm cannot be used together"
       echo
-      echo "  --with-prec-evap : Include precipitation and evaporation calculation"
-      echo "  --with-cosine    : turn on cosine model                (DOESNT COMPILE)"
+      echo "  --with-prec-evap  : Include precipitation and evaporation calculation"
+      echo "  --with-cosine     : turn on cosine model                (DOESNT COMPILE)"
       echo "  --with-no-parmetis"
       echo "  --with-oldio"
       echo "  --with-atmos"
       echo "  --with-nwm-bmi"
-      echo "  --with-bulk-fairall : Enable Fairall bulk scheme for air-sea exchange"
-      echo "  --with-ha        : Enable harmonic analysis output modules (DOESNT COMPILE)"
-      echo "  --with-marsh     : Use marsh module                    (DOESNT COMPILE)"
-      echo "  --with-pahm      : Use PaHM module                     (DOESNT COMPILE)"
-      echo "  --with-wwm       : Use wind-wave module                (DOESNT COMPILE)"
-      echo "  --with-ww3       : Use Wave Watch III                  (DOESNT COMPILE)"
-      echo "  --with-ice       : Use 1-class ICE module"
-      echo "  --with-mice      : Use multi-class ICE module          (DOESNT COMPILE)"
+      echo "  --with-bulk-fairall  : Enable Fairall bulk scheme for air-sea exchange"
+      echo "  --with-ha            : Enable harmonic analysis output modules (DOESNT COMPILE)"
+      echo "  --with-marsh         : Use marsh module                    (DOESNT COMPILE)"
+      echo "  --with-pahm          : Use PaHM module                     (DOESNT COMPILE)"
+      echo "  --with-wwm           : Use wind-wave module                (DOESNT COMPILE)"
+      echo "  --with-ww3           : Use Wave Watch III                  (DOESNT COMPILE)"
+      echo "  --with-ice           : Use 1-class ICE module"
+      echo "  --with-mice          : Use multi-class ICE module          (DOESNT COMPILE)"
       echo
       echo " #Tracer models:"
-      echo "  --with-gen       : Use generic tracer module"
-      echo "  --with-age       : Use age module"
-      echo "  --with-eco       : Use ECO-SIM module                  (DOESNT COMPILE)"
-      echo "  --with-icm       : Use ICM module                      (DOESNT COMPILE)"
-      echo "  --with-fib       : Use fecal indicating bacteria module"
-      echo "  --with-sed       : Use sediment module"
+      echo "  --with-gen           : Use generic tracer module"
+      echo "  --with-age           : Use age module"
+      echo "  --with-eco           : Use ECO-SIM module                  (DOESNT COMPILE)"
+      echo "  --with-icm           : Use ICM module                      (DOESNT COMPILE)"
+      echo "  --with-fib           : Use fecal indicating bacteria module"
+      echo "  --with-sed           : Use sediment module"
       echo "  --with-dvd"
       echo
       echo "  --with-debug"
