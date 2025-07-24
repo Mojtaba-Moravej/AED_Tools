@@ -75,7 +75,8 @@ while [ $# -gt 0 ] ; do
   ARGS="$ARGS $1"
   case $1 in
     --number_of_cores)
-      export BFLAG='-j8'
+      shift
+      export BFLAG="-j$1"
       ;;
     --debug)
       export DEBUG=true
