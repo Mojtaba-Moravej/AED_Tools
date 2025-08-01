@@ -4,7 +4,7 @@
 #export WITH_AED="ON"
 export FABMDIR=fabm-schism
 export WITH_AED_PLUS=false
-export BFLAG="-j8"
+
 export CWD=`pwd`
 export MAKE=make
 
